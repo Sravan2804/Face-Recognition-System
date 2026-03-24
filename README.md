@@ -83,9 +83,9 @@ Face-Recognition-System/
    cd Face-Recognition-System
 
 2. **Install Dependencies**
-  ```bash
+    ```bash
     pip install opencv-contrib-python numpy
-  ```
+    ```
 
 3. **Download Model Files**
   Ensure deploy.prototxt.txt and res10_300x300_ssd_iter_140000.caffemodel are in the root directory.
@@ -95,7 +95,7 @@ Face-Recognition-System/
 
 Run the application:
 
-```bash
+  ```bash
   python main.py
   ```
 1. Register a Person: Click Step 1, enter a name, and slowly move your head as instructed by the on-screen prompts.
