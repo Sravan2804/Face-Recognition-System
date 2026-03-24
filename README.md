@@ -85,8 +85,9 @@ Face-Recognition-System/
 2. **Install Dependencies**
   ```bash
     pip install opencv-contrib-python numpy
+    ```
 
-2 **Download Model Files**
+3. **Download Model Files**
   Ensure deploy.prototxt.txt and res10_300x300_ssd_iter_140000.caffemodel are in the root directory.
 
 
