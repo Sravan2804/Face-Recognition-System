@@ -37,7 +37,7 @@ Originally developed as part of a smart surveillance initiative, it efficiently 
 ---
 
 ## 📁 Project Structure
-
+```
 Face-Recognition-System/
 │
 ├── deploy.prototxt.txt      # DNN architecture file
@@ -52,7 +52,7 @@ Face-Recognition-System/
 │
 ├── requirements.txt
 └── README.md
-
+```
 
 ---
 
