@@ -35,7 +35,7 @@ Originally developed as part of a smart surveillance initiative, it efficiently 
 ---
 
 ## 📁 Project Structure
-
+```
 Face-Recognition-System/
 │
 ├── face_train.py # Trains the face recognition model
@@ -51,7 +51,7 @@ Face-Recognition-System/
 │
 ├── requirements.txt
 └── README.md
-
+```
 
 ---
 
