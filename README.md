@@ -1,7 +1,6 @@
 # 🧠 Face Recognition System using OpenCV & LBPH
 
-> A full-scale, intelligent face recognition system built for real-world applications using Python, OpenCV, Haar Cascade Classifiers, and the LBPH algorithm. This project mirrors the backbone of modern biometric access and surveillance systems.
-
+> An end-to-end Face Recognition Suite built with OpenCV DNN and LBPH (Local Binary Patterns Histograms). This system goes beyond basic recognition by implementing "Smart Registration" (capturing faces from multiple angles), Eye-based Face Alignment, and CLAHE lighting normalization.
 ---
 
 ## 🚀 Overview
@@ -14,23 +13,26 @@ Originally developed as part of a smart surveillance initiative, it efficiently 
 
 ## 🎯 Key Features
 
-- 🧠 **Custom Face Training**  
-  Train the model on any dataset of people. Just drop face images into class folders — no annotations required.
+- 🧠 **DNN Face Detection**  
+  Uses a ResNet-10 SSD Caffe model for high-accuracy face detection (far superior to traditional Haar Cascades).
 
-- 🖼️ **Real-Time Face Recognition**  
-  Detect and recognize faces instantly from static images or live webcam streams.
+- 🖼️ **Smart Registration (FaceID Style):**  
+  A guided data collection process that ensures the model learns your face from multiple angles (Center, Left, Right, Up, Down).
 
 - 🔍 **LBPH (Local Binary Patterns Histogram)**  
   A powerful algorithm that works well under various lighting conditions and is ideal for grayscale input.
 
-- 🧠 **Haar Cascade-Based Detection**  
-  Fast and lightweight facial detection engine built on classic CV techniques.
+- 🧠 **Face Alignment**  
+  Automatically detects eyes and rotates the face to a neutral, horizontal position to increase recognition accuracy.
 
-- 💾 **Model Persistence**  
-  Save and load trained face encodings and labels using OpenCV’s built-in methods and NumPy serialization.
+- 💾 **Lighting Normalization (CLAHE)**  
+  Implements Contrast Limited Adaptive Histogram Equalization to handle harsh shadows and inconsistent lighting.
 
-- 🧠 **Confidence Scoring**  
-  Get a probability-like score for each prediction to evaluate the reliability of recognition results.
+- 🧠 **Built-in Attendance System**  
+  Automatically logs recognized individuals into a attendance.csv file with precise timestamps.
+
+- 🧠 **Interactive GUI**  
+  A clean Tkinter interface for registering users, training the model, and running live recognition.
 
 ---
 
@@ -38,12 +40,11 @@ Originally developed as part of a smart surveillance initiative, it efficiently 
 
 Face-Recognition-System/
 │
-├── face_train.py # Trains the face recognition model
-├── face_recognition.py # Predicts face identities from test images
-├── haar_face.xml # Haar cascade XML file for face detection
-├── faces_trained.yml # Saved trained LBPH model
-├── features.npy # Numpy array of extracted face ROIs
-├── labels.npy # Corresponding labels for training data
+├── deploy.prototxt.txt      # DNN architecture file
+├── res10_300x300_ssd_iter_140000.caffemodel # Pre-trained weights
+├── faces_trained.yml        # The trained LBPH model (generated)
+├── attendance.csv           # Attendance logs (generated)
+└── main.py                  # The complete system code
 │
 ├── Faces/
 │ ├── train/ # Training data directory
@@ -57,20 +58,10 @@ Face-Recognition-System/
 
 ## 🛠️ How It Works
 
-### 🧪 Training the Model
-The `face_train.py` script:
-1. Reads face images from subfolders in `Faces/train/`.
-2. Detects faces using Haar Cascades.
-3. Extracts and stores facial ROIs (Regions of Interest).
-4. Trains an LBPH model using these face encodings.
-5. Saves the model (`faces_trained.yml`) and data arrays (`features.npy`, `labels.npy`).
-
-### 🤖 Predicting with the Model
-The `face_recognition.py` script:
-1. Loads a test image from `Faces/val/`.
-2. Converts it to grayscale and detects faces.
-3. Uses the trained model to predict the person's identity.
-4. Annotates the image with predicted name and confidence level.
+1. Detection: Frame is converted to a blob and passed through the SSD Caffe Model.
+2. Alignment: Eye centers are located; the face is rotated to a 0 degree tilt.
+3. Preprocessing: Image is converted to grayscale and CLAHE is applied to normalize histograms.
+4. Classification: LBPH predicts the ID and provides a confidence score (distance).
 
 ---
 
@@ -90,3 +81,26 @@ The `face_recognition.py` script:
    ```bash
    git clone https://github.com/yourusername/Face-Recognition-System.git
    cd Face-Recognition-System
+
+2. **Install Dependencies**
+  ```bash
+    pip install opencv-contrib-python numpy
+
+2 **Download Model Files**
+  Ensure deploy.prototxt.txt and res10_300x300_ssd_iter_140000.caffemodel are in the root directory.
+
+
+## Usage
+
+Run the application:
+
+```bash
+  python main.py
+  ```
+1. Register a Person: Click Step 1, enter a name, and slowly move your head as instructed by the on-screen prompts.
+
+2. Train the AI: Click Step 2. The system will align all captured images and build the faces_trained.yml file.
+
+3. Start Recognition: Choose Live Attendance for webcam use or Upload Image to test a specific file.
+
+4. View Logs: Click View Attendance Logs to see a history of recognized users directly within the app.
